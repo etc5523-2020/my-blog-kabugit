@@ -1,7 +1,7 @@
 name: "5523-myblog"
-title: "My Blog"
+title: "How has the United States handled the pandemic?"
 description: |
-  My Blog
+  COVID-19 has shaped a new world. It has warped us into an overdrive of emotions (and an underdrive economically). New and old alliances have shaken up, unemployment all around the world has risen exponentially almost like a pandemic in itself, and the stock market has behaved rather erratically as people tried to capitalize on the March dip. Everywhere, people and their governments have had to adapt and deal with the situation from a political, economical and ofcourse, healthcare point of view.
 output_dir: "_site"
 navbar:
   right:

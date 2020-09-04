@@ -1,0 +1,13 @@
+---
+title: "Data sources and description"
+site: distill::distill_website
+listing: posts
+---
+
+https://ourworldindata.org/coronavirus-source-data - Data comes from Our World in Data, who takes it from the European Centre for Disease Prevention and Control (ECDC). We discuss how and when the ECDC collects and publishes this data here. The cases & deaths dataset is updated daily. Note: the number of cases or deaths reported by any institution—including the ECDC, the WHO, Johns Hopkins and others—on a given day does not necessarily represent the actual number on that date. This is because of the long reporting chain that exists between a new case/death and its inclusion in statistics. This also means that negative values in cases and deaths can sometimes appear when a country sends a correction to the ECDC, because it had previously overestimated the number of cases/deaths. Alternatively, large changes can sometimes (although rarely) be made to a country's entire time series if the ECDC decides (and has access to the necessary data) to correct values retrospectively.
+
+https://covid.cdc.gov/covid-data-tracker/#cases - CDC provides state wise information on all US states and territories, including Alaska, Hawaii and Puerto Rico. In this analysis, however, only the continental United States has been considered.
+
+https://gist.github.com/dantonnoriega/bf1acd2290e15b91e6710b6fd3be0a53 - Git user 
+dantonnoriega has provided a well framed FIPS code list for all US states that has helped integrate all datasets together.
+

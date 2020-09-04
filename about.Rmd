@@ -1,7 +1,7 @@
 ---
 title: "About this blog"
 description: |
-  Some additional details about the blog
+  This is my first blog. More (and hopefully much better ones) to follow in the coming few weeks.
 ---
 
 ```{r setup, include=FALSE}
