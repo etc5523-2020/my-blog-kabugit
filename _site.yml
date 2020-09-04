@@ -1,0 +1,14 @@
+name: "5523-myblog"
+title: "My Blog"
+description: |
+  My Blog
+output_dir: "_site"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+    - text: "Sources"
+      href: sources.html
+output: distill::distill_article

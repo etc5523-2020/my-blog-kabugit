@@ -4,4 +4,99 @@ site: distill::distill_website
 listing: posts
 ---
 
-Test textsjd
+---
+title: "My Blog"
+site: distill::distill_website
+listing: posts
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+library(distill)
+library(tidyverse)
+library(dplyr)
+library(kableExtra)
+library(ggplot2)
+library(plotly)
+
+```
+
+
+
+
+```{r read-data}
+data <- read.csv(here::here("owid-covid-data.csv"))
+
+data_US <- data %>% 
+  filter(iso_code == "USA")
+```
+
+
+
+```{r new-case}
+data_US <- data_US %>% 
+  mutate(month = substr(date, 6, 7))
+
+tests <- data_US %>%
+  group_by(month) %>% 
+  summarise(tcases = sum(total_cases),
+            ncases = sum(new_cases)) %>% 
+  filter(month != 12)
+
+tests <- tests[-9, ]
+
+tests$stringent <- 
+
+test_plot <- tests %>% 
+  ggplot(aes(month, ncases)) +
+  geom_line(aes(group = 1)) +
+  geom_point(aes(size = ncases, color = ncases)) +
+  theme_bw() +
+  xlab("Month") +
+  ylab("New cases") +
+  ggtitle("New cases each month in the US (till 3rd September)")
+
+
+ggplotly(test_plot)
+```
+
+
+```{r stringe}
+
+stringent <- data_US %>%
+  group_by(month) %>% 
+  summarise(stringency_index = mean(stringency_index, na.rm = TRUE),
+            ncases = sum(new_cases)) %>% 
+  filter(month != 12)
+
+stringent <- stringent[-9, ]
+
+stringent$stringency_index <- round(stringent$stringency_index, 1)
+
+  
+string_plot <- stringent %>% 
+  ggplot(aes(month, ncases, label = stringency_index)) +
+  geom_line(aes(group = 1)) +
+  geom_point(aes(size = stringency_index, color = as.factor(stringency_index))) +
+  geom_text() +
+  theme_bw() +
+  xlab("Month") +
+  ylab("New cases") +
+  theme(legend.position="none")
+
+ggplotly(string_plot)
+```
+
+```{r state}
+library(maps)
+
+usa <- map_data("usa")
+dim(usa)
+
+ggplot() + geom_polygon(data = usa, aes(x=long, y = lat, group = group)) + 
+  coord_fixed(1.3)
+head(usa)
+```
+
