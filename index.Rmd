@@ -24,6 +24,10 @@ library(usmap)
 library(MASS)
 library(broom)
 library(stargazer)
+library(sparkline)
+library(DT)
+library(knitr)
+library(kableExtra)
 ```
 
 I need not introduce you to how COVID-19 has shaped the new world. It has warped the world into an overdrive of emotions (and an underdrive economically). New and old alliances have shaken up, unemployment all around the world has risen exponentially almost like a pandemic in itself, and the stock market has behaved rather erratically as people tried to capitalize on the March dip. Everywhere, people and their governments have had to adapt and deal with the situation from a political, economical and ofcourse, healthcare point of view.
@@ -177,7 +181,28 @@ tab <- augment(fit_rlm) %>%
 
 ggplot(data = popd) + geom_point(aes(Total.Cases, Total.Deaths))
 
-library(knitr)
-library(kableExtra)
+
 kable(tab, format = "html", table.attr = "style='width:10%;'") %>% 
   kableExtra::kable_styling()
+```
+
+```{r table2}
+popd %>% 
+  group_by(state) %>% 
+  summarise(
+    a = list(setNames(as.vector(summary(na.omit(Total.Deaths))),
+                   c("Min", "Q1", "Median", "Mean", "Q3", "Max"))),
+    distribution = spk_chr(Total.Deaths, type = "box")) %>% 
+  unnest_wider(a) %>% 
+  datatable(escape = FALSE,
+            options = list(paging = FALSE,
+                           dom = "t",
+                           fnDrawCallback = htmlwidgets::JS(
+  '
+function(){
+  HTMLWidgets.staticRender();
+}
+'
+))) %>% 
+  spk_add_deps() %>% 
+  formatRound(columns = c("Min", "Q1", "Mean", "Median", "Q3", "Max"), digits = 2)
