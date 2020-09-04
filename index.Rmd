@@ -162,3 +162,22 @@ p2 <- ggplot(data = all) +
 
 ggplotly(p2)
 ```
+
+```{r table1}
+popd <- all %>% dplyr::select(state, Total.Cases, Total.Deaths)
+  
+popd <- popd %>% distinct()
+
+fit_rlm <- rlm(Total.Deaths ~ Total.Cases, data = popd, na.rm = TRUE)
+fit_rlm
+summary(fit_rlm)
+
+tab <- augment(fit_rlm) %>% 
+  mutate(w = fit_rlm$w)
+
+ggplot(data = popd) + geom_point(aes(Total.Cases, Total.Deaths))
+
+library(knitr)
+library(kableExtra)
+kable(tab, format = "html", table.attr = "style='width:10%;'") %>% 
+  kableExtra::kable_styling()
