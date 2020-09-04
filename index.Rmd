@@ -41,6 +41,39 @@ data <- read.csv(here::here("owid-covid-data.csv"))
 
 data_US <- data %>% 
   filter(iso_code == "USA")
+
+mapdata <- readxl::read_xlsx(here::here("FIPS_US.xlsx"))
+
+mapdata <- mapdata %>% 
+  rename(
+    state = State,
+    )
+
+covid <- read.csv(here::here("united_states_covid19_cases_and_deaths_by_state.csv"))
+
+states <- map_data("state")
+covid <- covid %>% 
+  rename(
+    state = State.Territory,
+    )
+
+join <- mapdata %>% left_join(covid, by ="state")
+
+join <- join %>% subset(select = -FIPS)
+
+states$FIPS <- fips(states$region)
+join$FIPS <- fips(join$state)
+
+all <- states %>% left_join(join, by = "FIPS")
+
+pop <- read.csv(here::here("Population Estimates by State.csv"))
+
+pop <- pop %>% 
+  rename(
+    state = `ï..State`, 
+  )
+
+all <- all %>% left_join(pop, by = "state")
 ```
 
 
@@ -100,7 +133,7 @@ ggplotly(string_plot)
 ```
 
 ```{r state}
-library(maps)
+
 
 usa <- map_data("usa")
 dim(usa)
@@ -110,3 +143,11 @@ ggplot() + geom_polygon(data = usa, aes(x=long, y = lat, group = group)) +
 head(usa)
 ```
 
+```{r case, eval=FALSE}
+
+p1 <- ggplot(data = all) + geom_polygon(aes(x=long, y = lat, group = group.x, fill = Case.Rate.per.100000, label = state)) + geom_text(aes(longitude, latitude, label = toupper(substr(state, 1, 2)), size = 0.00000001), hjust = 0, vjust = 0) +
+  coord_fixed(1.3)
+  
+
+ggplotly(p1)
+```
