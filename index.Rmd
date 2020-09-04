@@ -16,14 +16,24 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 library(distill)
 library(tidyverse)
-library(dplyr)
-library(kableExtra)
+library(maps)
 library(ggplot2)
 library(plotly)
-
+library(dplyr)
+library(usmap)
+library(MASS)
+library(broom)
+library(stargazer)
 ```
 
+I need not introduce you to how COVID-19 has shaped the new world. It has warped the world into an overdrive of emotions (and an underdrive economically). New and old alliances have shaken up, unemployment all around the world has risen exponentially almost like a pandemic in itself, and the stock market has behaved rather erratically as people tried to capitalize on the March dip. Everywhere, people and their governments have had to adapt and deal with the situation from a political, economical and ofcourse, healthcare point of view.
 
+
+Plenty has been talked about it, but the United States of America is a particularly peculiar case, and the more you dwelve into how they have handled this crisis, the more you get confused about their leadership and their decision making. The fact that this pandemic had to fall in a year that also marked the presidential election is almost poetic. Poetically complicated, that is. A public health crisis has inevitably been shaped into a political debate by both parties.
+
+![Figure 2: President Donald Trump in a campaign rally in Tulse in June 2020](figure_trump_rally.jpg)
+
+In this post, however, we will try to steer away from the political side of this crisis and focus on cold hard numbers. So, let us look at what the situation is now in the USA, and if it has improved or worsened, and if there are any distinct reasons for either. We will also look at state-wise situation of the continental United States.
 
 
 ```{r read-data}
