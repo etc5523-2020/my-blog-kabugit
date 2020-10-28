@@ -5,7 +5,7 @@ description: |
 output_dir: "_site"
 navbar:
   right:
-    - text: "Home"
+    - text: "USA"
       href: index.html
     - text: "About"
       href: about.html
